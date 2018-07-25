@@ -10,29 +10,6 @@ import { RegisterComponent } from './login/register.component';
 
 const appRoutes: Routes = [
     {
-        path: '',
-        component: PagesComponent,
-        children: [
-            {
-                path: 'dashboard',
-                component: DashboardComponent
-            },
-            {
-                path: 'progress',
-                component: ProgressComponent
-            },
-            {
-                path: 'graficas1',
-                component: Graficas1Component
-            },
-            {
-                path: '',
-                redirectTo: '/dashboard',
-                pathMatch: 'full'
-            },
-        ]
-    },
-    {
         path: 'login',
         component: LoginComponent
     },
@@ -40,17 +17,11 @@ const appRoutes: Routes = [
         path: 'register',
         component: RegisterComponent
     },
-    /*
-    {
-        path: '',
-        redirectTo: '/dashboard',
-        pathMatch: 'full'
-    },
-    */
     {
         path: '**',
         component: NopagefoundComponent
     }
 ];
 
+// TODO: Por que se pone useHash a true???
 export const APP_ROUTES = RouterModule.forRoot( appRoutes , { useHash: true });
