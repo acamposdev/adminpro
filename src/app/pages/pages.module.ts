@@ -1,4 +1,4 @@
-import { NgModule } from '../../../node_modules/@angular/core';
+import { NgModule } from '@angular/core';
 
 // Rutas
 import { PAGES_ROUTES } from './page.routes';
@@ -17,6 +17,8 @@ import { IncrementadorComponent } from '../components/incrementador/incrementado
 import { ChartsModule } from 'ng2-charts';
 import { GraficaDonaComponent } from '../components/grafica-dona/grafica-dona.component';
 
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+
 @NgModule({
     declarations: [
         PagesComponent,
@@ -24,7 +26,8 @@ import { GraficaDonaComponent } from '../components/grafica-dona/grafica-dona.co
         ProgressComponent,
         Graficas1Component,
         IncrementadorComponent,
-        GraficaDonaComponent
+        GraficaDonaComponent,
+        AccountSettingsComponent
     ],
     imports: [
         PAGES_ROUTES,
