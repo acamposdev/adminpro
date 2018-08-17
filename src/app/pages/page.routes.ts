@@ -8,11 +8,15 @@ import { Graficas1Component } from './graficas1/graficas1.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { LoginGuardGuard } from '../services/services.index';
 
 const pagesRoutes: Routes = [
     {
         path: '',
         component: PagesComponent,
+        canActivate: [
+            LoginGuardGuard
+        ],
         children: [
             {
                 path: 'dashboard',
@@ -58,7 +62,7 @@ const pagesRoutes: Routes = [
             },
             {
                 path: '',
-                redirectTo: '/dashboard',
+                redirectTo: '/login',
                 pathMatch: 'full'
             },
             /*
