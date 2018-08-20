@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { UploadFileService } from '../upload-files/upload-file.service';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,8 @@ export class UserService {
 
   constructor(
     public http: HttpClient,
-    public _router: Router
+    public _router: Router,
+    public _uploadFileService: UploadFileService
   ) {
     console.log('UserService listo');
     this.loadFromStorage();
@@ -107,7 +109,43 @@ export class UserService {
       });
   }
 
+  /**
+   * Metodo para actualizar usuarios
+   */
+  updateUser(user: User) {
+    const url = URL_SERVICIOS + '/users/' + this.user._id + '?token=' + this.token;
+    return this.http.put(url, user)
+      .map((response: any) => {
+
+        this.saveInStorage(response.user._id, this.token, response.user);
+        swal('Usuario actualizado', user.name, 'success');
+
+        return true;
+      });
+  }
+
+  /**
+   * Metodo para camniar la imagen de un usuario
+   */
+  changeImage(file: File, id: string) {
+    this._uploadFileService.uploadFile(file, 'users', id)
+      .then((response: any) => {
+        // Sobrescribimos la imagen actual para que se refleje el cambio inmediatamente
+        this.user.img = response.user.img;
+
+        // Mostramos el popup de exito
+        swal('Imagen actualizada', this.user.name, 'success');
+
+        // Actualizamos el storage
+        this.saveInStorage(id, this.token, this.user);
+      })
+      .catch((err) => {
+        swal('Error modificando la imagen', this.user.name, 'error');
+        console.log('ERROR ' , err);
+      });
+  }
+
   idLogged() {
-    return (this.token.length > 5)? true : false;
+    return (this.token.length > 5) ? true : false;
   }
 }

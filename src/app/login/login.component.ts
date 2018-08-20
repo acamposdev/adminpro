@@ -67,10 +67,10 @@ export class LoginComponent implements OnInit {
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {}, (googleUser) => {
       const profile = googleUser.getBasicProfile();
-      console.log(profile);
+      // console.log(profile);
 
       const token = googleUser.getAuthResponse().id_token;
-      console.log(token);
+      // console.log(token);
 
       // Nos logamos en google atraves del servicio
       this._userService.loginGoogle(token).subscribe((result) => {
@@ -87,8 +87,8 @@ export class LoginComponent implements OnInit {
    * es formularios reactivos (ver register)
    */
   login(form: NgForm) {
-    console.log(form.valid);
-    console.log(form.value);
+    // console.log(form.valid);
+    // console.log(form.value);
 
     if (!form.valid) {
       return;
