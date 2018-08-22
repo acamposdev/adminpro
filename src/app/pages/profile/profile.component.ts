@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
    * Metodo que detecta que se ha seleccionado un fichero
    * @param file Fichero seleccionado (en realidad podria mos recibir todo el evento)
    */
-  imageSelection(file) {
+  imageSelection(file: File) {
     if (!file) {
       this.imageUpload = null;
       return;

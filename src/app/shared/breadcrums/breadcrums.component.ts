@@ -18,7 +18,6 @@ export class BreadcrumsComponent implements OnInit {
     private meta: Meta
   ) {
     this.getDataRoute().subscribe( data => {
-      console.log(data);
       this.titulo = data.title;
       this.title.setTitle(this.titulo);
 

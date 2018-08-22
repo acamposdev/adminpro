@@ -10,6 +10,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { LoginGuardGuard } from '../services/services.index';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './users/users.component';
 
 const pagesRoutes: Routes = [
     {
@@ -66,6 +67,15 @@ const pagesRoutes: Routes = [
                 component: ProfileComponent,
                 data: {
                     title: 'Perfil de Usuario'
+                }
+            },
+
+            // Administracion
+            {
+                path: 'users',
+                component: UsersComponent,
+                data: {
+                    title: 'Adminstración de Usuario'
                 }
             },
             {

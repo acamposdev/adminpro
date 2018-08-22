@@ -113,11 +113,13 @@ export class UserService {
    * Metodo para actualizar usuarios
    */
   updateUser(user: User) {
-    const url = URL_SERVICIOS + '/users/' + this.user._id + '?token=' + this.token;
+    const url = URL_SERVICIOS + '/users/' + user._id + '?token=' + this.token;
     return this.http.put(url, user)
       .map((response: any) => {
 
-        this.saveInStorage(response.user._id, this.token, response.user);
+        if (response.user._id === this.user._id) {
+          this.saveInStorage(response.user._id, this.token, response.user);
+        }
         swal('Usuario actualizado', user.name, 'success');
 
         return true;
@@ -142,6 +144,29 @@ export class UserService {
       .catch((err) => {
         swal('Error modificando la imagen', this.user.name, 'error');
         console.log('ERROR ' , err);
+      });
+  }
+
+  /**
+   * Metodo para recuperar los usuario del servidor paginados
+   */
+  getUsers(offset: number = 0) {
+    const url = URL_SERVICIOS + '/users?offset=' + offset;
+    return this.http.get(url);
+  }
+
+  searchUsers(key: string) {
+    const url = URL_SERVICIOS + '/search/collection/user/' + key;
+    return this.http.get(url)
+      .map((response: any) => response.user);
+  }
+
+  removeUser(id: string) {
+    const url = URL_SERVICIOS + '/users/' + id + '?token=' + this.token;
+    return this.http.delete(url)
+      .map(result => {
+        swal('Usuario borrado', 'Usuario borrado correctamente', 'success');
+        return true;
       });
   }
 
