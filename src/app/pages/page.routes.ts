@@ -11,6 +11,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { LoginGuardGuard } from '../services/services.index';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
+import { HospitalsComponent } from './hospitals/hospitals.component';
+import { DoctorsListComponent } from './doctors/doctors-list.component';
+import { DoctorsComponent } from './doctors/doctors.component';
 
 const pagesRoutes: Routes = [
     {
@@ -76,6 +79,27 @@ const pagesRoutes: Routes = [
                 component: UsersComponent,
                 data: {
                     title: 'Adminstración de Usuario'
+                }
+            },
+            {
+                path: 'hospitals',
+                component: HospitalsComponent,
+                data: {
+                    title: 'Adminstración de Hospitales'
+                }
+            },
+            {
+                path: 'doctors',
+                component: DoctorsListComponent,
+                data: {
+                    title: 'Adminstración de Médicos'
+                }
+            },
+            {
+                path: 'doctors/:doctorId',
+                component: DoctorsComponent,
+                data: {
+                    title: 'Edicion de Médicos'
                 }
             },
             {

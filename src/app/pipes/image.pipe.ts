@@ -10,7 +10,6 @@ export class ImagePipe implements PipeTransform {
    * Implementacion de un pipe que pone la ruta completa a un nombre de imagen
    */
   transform(img: string, entity: string = 'users'): any {
-
     let url = URL_SERVICIOS + '/images';
 
     if (!img) {
@@ -28,7 +27,7 @@ export class ImagePipe implements PipeTransform {
       break;
 
       case 'doctors':
-        url += '/doctor/' + img;
+        url += '/doctors/' + img;
       break;
 
       case 'hospitals':

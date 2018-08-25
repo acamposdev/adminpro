@@ -58,20 +58,23 @@ export class ModalUploadComponent implements OnInit {
     this._uploadFileService.uploadFile(this.imageUpload, this._modalUploadService.entity, this._modalUploadService.id)
       .then((result: any) => {
 
-        this._modalUploadService.notification.emit(result);
+        // console.log('result --> ' , result);
+
         this.closeModal();
 
         // Si el usuario actualizado es el usuario logado debe actualizarse en el localStorage y en userService
-        if (this._userService.user._id === result.user._id) {
+        if (result.user && this._userService.user._id === result.user._id) {
           // Actualizamos la imagen
           this._userService.user.img = result.user.img;
           // Actualizamos el storage
           this._userService.saveInStorage(result.user._id, this._userService.token, result.user);
         }
 
+        this._modalUploadService.notification.emit(result);
+        swal('Actualizar Imagen', 'Imagen actualizada correctramente', 'success');
       })
       .catch((err) => {
-        console.log('Error en la carga');
+        console.log('Error en la carga ' , err);
       });
   }
 }

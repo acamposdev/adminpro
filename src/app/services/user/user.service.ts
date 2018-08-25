@@ -16,7 +16,6 @@ export class UserService {
     public _router: Router,
     public _uploadFileService: UploadFileService
   ) {
-    console.log('UserService listo');
     this.loadFromStorage();
   }
 
