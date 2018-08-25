@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/services.index';
-import { switchAll } from 'rxjs/operators';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 declare var swal: any;

@@ -1,0 +1,74 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input #search (keyup)="searchHospital(search.value)" type="text" class="form-control" placeholder="Buscar hospital">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Compoenente cargando... -->
+<div class="row animated fadeIn" *ngIf="loading">
+  <div class="col-lg-12">
+    <div class="alert alert-warning text-center">
+      <strong>Cargando</strong>
+      <br/>
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+      <br/>
+      <span>Espere por favor</span>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        
+        <button (click)="createHospital()" type="button" class="btn btn-rounded btn-primary float-right">
+          <li class="fa fa-plus"></li>
+          Añadir Hospital
+        </button>
+    
+        <br/>
+        <h3 class="card-title">Listado de hospitales (<small>{{ totalRegs }}</small>)</h3>
+
+        <table class="table">
+          <thead>
+            <th>Imagen</th>
+            <th>Hospital</th>
+            <th></th>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let hospital of hospitals">
+              <td class="w70">
+                <img (click)="showModal(hospital._id)" [src]="hospital.img | image: 'hospitals'" class="img-50 img-circle pointer">
+              </td>
+              <td>
+                <input type="text" class="form-control" [(ngModel)]="hospital.name"/>
+              </td>
+              <td>
+                <button (click)="updateHospital(hospital)" class="btn btn-primary" [disabled]="!hospital.name">
+                  <i class="fa fa-save"></i>
+                </button>
+                <button (click)="deleteHospital(hospital._id)" class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-secondary" (click)="previousPage()">
+          Anterior
+        </button>
+        <button class="btn btn-secondary" (click)="nextPage()">
+          Siguiente
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
