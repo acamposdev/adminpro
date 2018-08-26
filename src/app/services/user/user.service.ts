@@ -2,14 +2,20 @@ import { Injectable } from '@angular/core';
 import { User } from '../../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
+
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw'; // Prevee un mensaje de error en la consola del navegador
+
 import { Router } from '@angular/router';
 import { UploadFileService } from '../upload-files/upload-file.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
   user: User;
   token: string;
+  menu: any[] = [];
 
   constructor(
     public http: HttpClient,
@@ -24,8 +30,10 @@ export class UserService {
 
     return this.http.post(url, { token: token })
       .map((response: any) => {
+        // console.log('LOGIN GOOGLE: ' , response);
+
         // Guardamos la info en el localStorage
-        this.saveInStorage(response.id, response.token, response.user);
+        this.saveInStorage(response.id, response.token, response.user, response.menu);
       });
   }
 
@@ -43,13 +51,19 @@ export class UserService {
     }
 
     return this.http.post(url, user)
-    .map((response: any) => { // :any para evitar el fallo de ts
+      .map((response: any) => { // :any para evitar el fallo de ts
+        // console.log('LOGIN: ' , response);
 
-      // Guardamos la info en el localStorage
-      this.saveInStorage(response.id, response.token, response.user);
+        // Guardamos la info en el localStorage
+        this.saveInStorage(response.id, response.token, response.user, response.menu);
 
-      return true;
-    });
+        return true;
+      })
+      .catch(err => {
+        // console.log(err.error.message);
+        swal('Error en el login', err.error.message, 'error');
+        return Observable.throw(err);
+      });
   }
 
   /**
@@ -58,9 +72,11 @@ export class UserService {
   logout() {
     this.user = null;
     this.token = '';
+    this.menu = [];
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('menu');
 
     this._router.navigate(['./login']);
   }
@@ -72,14 +88,16 @@ export class UserService {
    * @param token Token de autenticacion
    * @param user Usuario logado
    */
-  saveInStorage(id: string, token: string, user: User) {
+  saveInStorage(id: string, token: string, user: User, menu: any) {
     // Guardamos la info en el localStorage
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('menu', JSON.stringify(menu));
 
     this.user = user;
     this.token = token;
+    this.menu = menu;
   }
 
   /**
@@ -89,9 +107,11 @@ export class UserService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.user = JSON.parse(localStorage.getItem('user'));
+      this.menu = JSON.parse(localStorage.getItem('menu'));
     } else {
       this.token = '';
       this.user = null;
+      this.menu = [];
     }
   }
 
@@ -105,6 +125,11 @@ export class UserService {
       .map( (response: any) => {
         swal('Usuario creado', user.email, 'success');
         return response.user;
+      })
+      .catch(err => {
+        // console.log(err.error.message);
+        swal(err.error.message, err.error.errors.message, 'error');
+        return Observable.throw(err);
       });
   }
 
@@ -117,11 +142,16 @@ export class UserService {
       .map((response: any) => {
 
         if (response.user._id === this.user._id) {
-          this.saveInStorage(response.user._id, this.token, response.user);
+          this.saveInStorage(response.user._id, this.token, response.user, response.menu);
         }
         swal('Usuario actualizado', user.name, 'success');
 
         return true;
+      })
+      .catch(err => {
+        // console.log(err.error.message);
+        swal(err.error.message, err.error.errors.message, 'error');
+        return Observable.throw(err);
       });
   }
 
@@ -138,7 +168,7 @@ export class UserService {
         swal('Imagen actualizada', this.user.name, 'success');
 
         // Actualizamos el storage
-        this.saveInStorage(id, this.token, this.user);
+        this.saveInStorage(id, this.token, this.user, this.menu);
       })
       .catch((err) => {
         swal('Error modificando la imagen', this.user.name, 'error');

@@ -67,7 +67,7 @@ export class ModalUploadComponent implements OnInit {
           // Actualizamos la imagen
           this._userService.user.img = result.user.img;
           // Actualizamos el storage
-          this._userService.saveInStorage(result.user._id, this._userService.token, result.user);
+          this._userService.saveInStorage(result.user._id, this._userService.token, result.user, result.menu);
         }
 
         this._modalUploadService.notification.emit(result);

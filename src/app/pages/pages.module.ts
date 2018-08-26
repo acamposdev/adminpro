@@ -30,6 +30,7 @@ import { ModalUploadComponent } from '../components/modal-upload/modal-upload.co
 import { HospitalsComponent } from './hospitals/hospitals.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorsListComponent } from './doctors/doctors-list.component';
+import { SearcherComponent } from './searcher/searcher.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { DoctorsListComponent } from './doctors/doctors-list.component';
         ModalUploadComponent,
         HospitalsComponent,
         DoctorsComponent,
-        DoctorsListComponent
+        DoctorsListComponent,
+        SearcherComponent
     ],
     // Porque????
     exports: [

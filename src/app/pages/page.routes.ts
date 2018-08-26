@@ -1,5 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 
+// Guards
+import { LoginGuardGuard, AdminGuard } from '../services/services.index';
+
 // Components
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -8,12 +11,12 @@ import { Graficas1Component } from './graficas1/graficas1.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
-import { LoginGuardGuard } from '../services/services.index';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
 import { HospitalsComponent } from './hospitals/hospitals.component';
 import { DoctorsListComponent } from './doctors/doctors-list.component';
 import { DoctorsComponent } from './doctors/doctors.component';
+import { SearcherComponent } from './searcher/searcher.component';
 
 const pagesRoutes: Routes = [
     {
@@ -72,6 +75,13 @@ const pagesRoutes: Routes = [
                     title: 'Perfil de Usuario'
                 }
             },
+            {
+                path: 'search/:key',
+                component: SearcherComponent,
+                data: {
+                    title: 'Busqueda general'
+                }
+            },
 
             // Administracion
             {
@@ -79,7 +89,10 @@ const pagesRoutes: Routes = [
                 component: UsersComponent,
                 data: {
                     title: 'Adminstración de Usuario'
-                }
+                },
+                canActivate: [
+                    AdminGuard
+                ]
             },
             {
                 path: 'hospitals',
