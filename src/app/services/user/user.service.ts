@@ -25,6 +25,25 @@ export class UserService {
     this.loadFromStorage();
   }
 
+  /**
+   * Metodo de renovacion de token JWT
+   */
+  tokenRenoval() {
+    const url = URL_SERVICIOS + '/login/tokenrenoval?token=' + this.token;
+    return this.http.get(url)
+      .map((result: any) => {
+        this.token = result.token;
+        localStorage.setItem('token', this.token);
+
+        return result;
+      })
+      .catch((err) => {
+        this._router.navigate(['/login']);
+        swal('Error de auetnticacion', 'No se pudo renovar el token', 'error');
+        return Observable.throw(err);
+      });
+  }
+
   loginGoogle( token: string) {
     const url = URL_SERVICIOS + '/login/google';
 

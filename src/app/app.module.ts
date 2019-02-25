@@ -16,21 +16,25 @@ import { RegisterComponent } from './login/register.component';
 
 // Service Module
 import { ServiceModule } from './services/service.module';
+import { PagesComponent } from './pages/pages.component';
+import { SharedModule } from './shared/shared.module';
+import { ModalUploadComponent } from './components/modal-upload/modal-upload.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
-    PagesModule,
     APP_ROUTES,
     FormsModule,
     ServiceModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

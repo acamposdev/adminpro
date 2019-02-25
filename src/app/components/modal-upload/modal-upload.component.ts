@@ -13,7 +13,7 @@ export class ModalUploadComponent implements OnInit {
 
   constructor(
     private _uploadFileService: UploadFileService,
-    private _modalUploadService: ModalUploadService,
+    public _modalUploadService: ModalUploadService,
     private _userService: UserService
   ) { }
 

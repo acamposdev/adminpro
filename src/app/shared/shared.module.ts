@@ -8,6 +8,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { PipesModule } from '../pipes/pipes.module';
         HeaderComponent,
         SidebarComponent,
         BreadcrumsComponent,
-        NopagefoundComponent
+        NopagefoundComponent,
+        ModalUploadComponent
     ],
 
     // Exportamos porque se van a usar en otros modulos.
@@ -28,7 +30,8 @@ import { PipesModule } from '../pipes/pipes.module';
         HeaderComponent,
         SidebarComponent,
         BreadcrumsComponent,
-        NopagefoundComponent
+        NopagefoundComponent,
+        ModalUploadComponent
     ]
 })
 export class SharedModule { }

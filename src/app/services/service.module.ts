@@ -9,6 +9,7 @@ import {
   SharedService, UserService, HospitalService, DoctorService,
   UploadFileService } from './services.index';
 import { AdminGuard } from './guards/admin.guard';
+import { VerifyTokenGuard } from './guards/verify-token.guard';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { AdminGuard } from './guards/admin.guard';
   providers: [
     LoginGuardGuard,
     AdminGuard,
+    VerifyTokenGuard,
     SettingsService,
     SidebarService,
     SharedService,

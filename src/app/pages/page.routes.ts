@@ -1,10 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
 // Guards
-import { LoginGuardGuard, AdminGuard } from '../services/services.index';
+import { AdminGuard, VerifyTokenGuard } from '../services/services.index';
 
 // Components
-import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { Graficas1Component } from './graficas1/graficas1.component';
@@ -14,24 +13,19 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
 import { HospitalsComponent } from './hospitals/hospitals.component';
-import { DoctorsListComponent } from './doctors/doctors-list.component';
-import { DoctorsComponent } from './doctors/doctors.component';
 import { SearcherComponent } from './searcher/searcher.component';
 
 const pagesRoutes: Routes = [
-    {
-        path: '',
-        component: PagesComponent,
-        canActivate: [
-            LoginGuardGuard
-        ],
-        children: [
+
             {
                 path: 'dashboard',
                 component: DashboardComponent,
                 data: {
                     title: 'Dashboard'
-                }
+                },
+                canActivate: [
+                    VerifyTokenGuard
+                ]
             },
             {
                 path: 'progress',
@@ -103,17 +97,10 @@ const pagesRoutes: Routes = [
             },
             {
                 path: 'doctors',
-                component: DoctorsListComponent,
                 data: {
                     title: 'Adminstración de Médicos'
-                }
-            },
-            {
-                path: 'doctors/:doctorId',
-                component: DoctorsComponent,
-                data: {
-                    title: 'Edicion de Médicos'
-                }
+                },
+                loadChildren: './doctors/doctors.module#DoctorsModule'
             },
             {
                 path: '',
@@ -126,8 +113,6 @@ const pagesRoutes: Routes = [
                 component: NopagefoundComponent
             }
             */
-        ]
-    }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild( pagesRoutes );
